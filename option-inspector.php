@@ -49,6 +49,11 @@ final class O1_Option_Inspector {
         check_ajax_referer( 'option_inspector', '_nonce' );
 
         $option_name = sanitize_key( $_REQUEST['option_name'] );
+
+        $autoload = $wpdb->get_var( $wpdb->prepare(
+            "SELECT autoload FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option_name ) );
+        print '<div class="option-autoload">autoload = '. $autoload . '</div>';
+
         $value = get_option( $option_name );
         require_once( plugin_dir_path( __FILE__ ) . 'inc/dBug.php' );
         new dBug\dBug( $value );
