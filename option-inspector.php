@@ -46,6 +46,9 @@ final class O1_Option_Inspector {
     }
 
     public function ajax_receiver() {
+
+        global $wpdb;
+
         check_ajax_referer( 'option_inspector', '_nonce' );
 
         $option_name = sanitize_key( $_REQUEST['option_name'] );
