@@ -1,4 +1,4 @@
-=== Options Inspector ===
+=== Option Inspector ===
 Contributors: Charles, szepe.viktor
 Donate link: http://sexywp.com/plugin-options-inspector.htm
 Tags: options, management, admin, developer, tools, administration
