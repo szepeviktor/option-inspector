@@ -131,7 +131,7 @@ class dBug
 	*/
 	public function renderTableHeader($type,$text,$colspan=0)
 	{
-		echo '<table cellspacing=2 cellpadding=3 class="dBug_'.$type.'">
+		echo '<table cellspacing=2 cellpadding=3 class="dBug dBug_'.$type.'">
 				<tr>
 					<td '.(($this->bCollapsed) ? 'style="font-style:italic" ' : '').'class="dBug_'.$type.'Header" '.($colspan?'colspan='.$colspan:'').' onClick="dBug_toggleTable(this)">'.$text.'</td>
 				</tr>';
@@ -149,7 +149,7 @@ class dBug
 	{
 		if(!$valueStyle)$valueStyle=$headerStyle;
 		$this->initializeHeader($header);
-		echo '<table cellspacing=2 cellpadding=3 class="dBug_'.$headerStyle.'">
+		echo '<table cellspacing=2 cellpadding=3 class="dBug dBug_'.$headerStyle.'">
 				<tr>
 					<td '.(($this->bCollapsed) ? 'style="font-style:italic" ' : '').'class="dBug_'.$headerStyle.'Header" '.($colspan?'colspan='.$colspan:'').' onClick="dBug_toggleRow(this)">'
 						.$header.
@@ -257,7 +257,7 @@ class dBug
 		$lines=preg_split('/\R/u', $nv);
 		$linesCount=count($lines);
 		if ($linesCount==1 && $length<=self::$embeddedStringMaxLength) {
-			$this->renderPrimitiveType('string','string ['.$length.']',$var);
+			$this->renderPrimitiveType('string','string ['.$length.']',$nv);
 		} else {
 			$this->makeTableHeader('string','string ('.$length.' chars @ '.$linesCount.' lines)');
 			foreach ($lines as $num=>$line) {
