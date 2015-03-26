@@ -149,7 +149,7 @@ class dBug
 	{
 		if(!$valueStyle)$valueStyle=$headerStyle;
 		$this->initializeHeader($header);
-		echo '<table cellspacing=2 cellpadding=3 class="dBug_'.$headerStyle.'">
+		echo '<table cellspacing=2 cellpadding=3 class="dBug dBug_'.$headerStyle.'">
 				<tr>
 					<td '.(($this->bCollapsed) ? 'style="font-style:italic" ' : '').'class="dBug_'.$headerStyle.'Header" '.($colspan?'colspan='.$colspan:'').' onClick="dBug_toggleRow(this)">'
 						.$header.

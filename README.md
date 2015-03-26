@@ -1,1 +1,1 @@
-Go to Settings / Options and inspect, edit and search options.
+Go to Tools / Options and inspect, edit, delete and search options.

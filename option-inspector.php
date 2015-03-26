@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Option Inspector
-Version: 0.2
+Version: 2.0.0
 Description: Debug options, even serialized ones.
-Plugin URI: https://wordpress.org/plugins/option-inspector/
+Plugin URI: https://wordpress.org/plugins/options-inspector/
 Author: Viktor Szépe
 Author URI: http://www.online1.hu/webdesign/
 License: GNU General Public License (GPL) version 2
@@ -155,8 +155,8 @@ final class O1_Option_Inspector {
 
         // Hack into the Settings menu.
         // @TODO copy options.php listing loop.
-        $submenu['options-general.php'][14] = array( __( 'Options' ), 'manage_options', 'options.php' );
-        ksort( $submenu['options-general.php'] );
+        $submenu['tools.php'][7] = array( __( 'Options' ), 'manage_options', 'options.php' );
+        ksort( $submenu['tools.php'] );
     }
 
 }

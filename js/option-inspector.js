@@ -124,7 +124,7 @@ jQuery(function ($) {
                     var row, th, td;
                     if ('1' === data) {
                         row = labelTh.parent();
-                        // Shrink paddings, wrap cell content and slide up.
+                        // Shrink paddings, wrap cell contents and slide up.
                         row.children()
                             .animate({'padding-top': 0, 'padding-bottom': 0}, 500)
                             .wrapInner('<div class="table-slider"/>').parent().find('.table-slider')
@@ -141,7 +141,7 @@ jQuery(function ($) {
             labelTh.append(wpIconHtml);
         }
 
-        // Popular plugins
+        // Popular plugins' icons
         $(pluginLogos).each(function (i, plugin) {
             var style;
             if (plugin.regexp.test(label.text())) {

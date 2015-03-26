@@ -2,7 +2,7 @@
 
 # download
 UA="Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:36.0) Gecko/20100101 Firefox/36.0.1 Waterfox/36.0.1"
-grep --no-group-separator -A 1 "^// http" icon-coder.less \
+grep --no-group-separator -A 1 "^// http" icon-encoder.less \
     | while read URL; do
         URL="${URL:3}"
         read FILE
@@ -11,4 +11,4 @@ grep --no-group-separator -A 1 "^// http" icon-coder.less \
     done
 
 # convert
-lessc icon-coder.less > out.css
+lessc icon-encoder.less > out.css
