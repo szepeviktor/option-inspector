@@ -1,7 +1,0 @@
-# BEGIN Option Inspector development
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^(.*)\.min(.*)$ $1$2 [L]
-</IfModule>
-
-# END Option Inspector development
