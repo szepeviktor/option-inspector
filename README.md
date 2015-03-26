@@ -1,1 +1,1 @@
-Go to Settings / Options and inspect serialized option values.
+Go to Settings / Options and inspect, edit and search options.
