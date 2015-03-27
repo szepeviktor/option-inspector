@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Option Inspector
-Version: 2.0.0
+Version: 2.0.1
 Description: Inspect and edit options, even serialized ones.
 Plugin URI: https://wordpress.org/plugins/options-inspector/
 Author: Viktor Szépe
@@ -57,18 +57,6 @@ final class O1_Option_Inspector {
 
         $capability = 'manage_options';
 
-        /**
-         * Filter the capability required when using the Settings API.
-         *
-         * By default, the options groups for all registered settings require the manage_options capability.
-         * This filter is required to change the capability required for a certain options page.
-         *
-         * @since 3.2.0
-         *
-         * @param string $capability The capability used for the page, which is manage_options by default.
-         */
-        $capability = apply_filters( "option_page_capability_{$option_page}", $capability );
-
         if ( !current_user_can( $capability ) || empty( $_REQUEST['option_name'] ) ) {
             wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
         }
@@ -84,7 +72,7 @@ final class O1_Option_Inspector {
 
         $autoload = $wpdb->get_var( $wpdb->prepare(
             "SELECT autoload FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option_name ) );
-        print '<div class="option-autoload">autoload = '. $autoload . '</div>';
+        printf( '<div class="option-autoload">autoload = %s</div>', $autoload );
 
         $value = get_option( $option_name );
 
@@ -120,19 +108,14 @@ final class O1_Option_Inspector {
         $option_name = sanitize_key( $_REQUEST['option_name'] );
         $option_value = wp_unslash( $_REQUEST['option_value'] );
 
-        // eval returns false on error.
-        if ( 'false' === strtolower( $option_value ) ) {
-            update_option( $option_name, false );
-            wp_die(1);
-        }
+        $code = '$option_value = ' . $option_value . ';';
 
-        //$option_value = str_replace( ';', '\;', $option_value );
-        // preg_match( ')\s*;' ...
-        if ( null !== eval( '$option_value = ' . $option_value . ';' ) ) {
-            wp_die( 0 );
-        } else {
+        if ( true === $this->php_code_check( $code ) ) {
+            eval( '$option_value = ' . $option_value . ';' );
             update_option( $option_name, $option_value );
             wp_die( 1 );
+        } else {
+            wp_die( 'parse error' );
         }
     }
 
@@ -157,6 +140,11 @@ final class O1_Option_Inspector {
         // @TODO copy options.php listing loop.
         $submenu['tools.php'][7] = array( __( 'Options' ), 'manage_options', 'options.php' );
         ksort( $submenu['tools.php'] );
+    }
+
+    private function php_code_check( $code ) {
+
+        return @eval( 'return true;' . $code );
     }
 
 }

@@ -206,7 +206,7 @@ jQuery(function ($) {
                         if ('1' === data) {
                             tb_remove();
                         } else {
-                            alert('Update failed.');
+                            alert('Update failed: ' + data);
                         }
                     });
                 });

@@ -1,6 +1,9 @@
 <?php
 /*
-option listing part of options.php
+Option listing part of wp-admin/options.php
+
+This is for reference only.
+https://github.com/WordPress/WordPress/blob/master/wp-admin/options.php#L224-L273
 */
 
 global $wpdb;

@@ -4,7 +4,7 @@ Donate link: http://sexywp.com/plugin-options-inspector.htm
 Tags: options, management, admin, developer, tools, administration
 Requires at least: 4.0
 Tested up to: 4.1.1
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 
 Inspect and edit options, even serialized ones.
 
@@ -59,6 +59,10 @@ Additional data are read and written by AJAX requests.
 1. Edit a serialized option.
 
 == Changelog ==
+
+= 2.0.1 =
+* Fixed an undefined variable.
+* Detect [eval() parse errors](http://devwp.eu/eval-error-check/)
 
 = 2.0.0 =
 * This is another plugin, [the old one is available here](http://plugins.svn.wordpress.org/options-inspector/tags/1.0.2/).
