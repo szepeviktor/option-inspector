@@ -4,7 +4,7 @@ Donate link: http://sexywp.com/plugin-options-inspector.htm
 Tags: options, management, admin, developer, tools, administration
 Requires at least: 4.0
 Tested up to: 4.1.1
-Stable tag: 2.0.1
+Stable tag: 2.1.0
 
 Inspect and edit options, even serialized ones.
 
@@ -20,6 +20,7 @@ Features:
 * Search: Filter options in real time
 * Delete options
 * Show autoload status (yes or no)
+* Display value size in SQL bytes
 * Popular plugin's options are marked with the author's website favicon
 * Transients are marked with a clock icon
 * Transient timeouts are marked with a red clock icon
@@ -59,6 +60,10 @@ Additional data are read and written by AJAX requests.
 1. Edit a serialized option.
 
 == Changelog ==
+
+= 2.1.0 =
+* Display size of option value.
+* Added PHP DocBlocks.
 
 = 2.0.1 =
 * Fixed an undefined variable.

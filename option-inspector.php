@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Option Inspector
-Version: 2.0.1
+Version: 2.1.0
 Description: Inspect and edit options, even serialized ones.
 Plugin URI: https://wordpress.org/plugins/options-inspector/
 Author: Viktor Szépe
@@ -17,6 +17,9 @@ if ( ! function_exists( 'add_filter' ) ) {
     exit();
 }
 
+/**
+ * Option Inspector
+ */
 final class O1_Option_Inspector {
 
     private $plugin_url;
@@ -24,15 +27,19 @@ final class O1_Option_Inspector {
     public function __construct() {
 
         $this->plugin_url = plugin_dir_url( __FILE__ );
+        add_action( 'admin_menu', array( $this, 'menu' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ) );
+
         add_action( 'wp_ajax_o1_inspect_option', array( $this, 'ajax_inspect_receiver' ) );
         add_action( 'wp_ajax_o1_edit_option', array( $this, 'ajax_edit_receiver' ) );
+        // @TODO add toggle_autoload
         add_action( 'wp_ajax_o1_update_option', array( $this, 'ajax_update_receiver' ) );
-        // @TODO toggle autoload
         add_action( 'wp_ajax_o1_delete_option', array( $this, 'ajax_delete_receiver' ) );
-        add_action( 'admin_menu', array( $this, 'menu' ) );
     }
 
+    /**
+     * Enqueue styles and scripts at admin_enqueue_scripts.
+     */
     public function admin_script( $hook ) {
 
         if ( 'options.php' !== $hook ) {
@@ -48,9 +55,13 @@ final class O1_Option_Inspector {
             array( 'jquery-core' ) );
         wp_enqueue_script( 'option-inspector', $this->plugin_url . 'js/option-inspector.min.js',
             array( 'option-inspector-jquery-typewatch', 'thickbox', 'option-inspector-dbug' ) );
-        wp_localize_script( 'option-inspector', 'OPTIONINS', array( 'nonce' => $nonce ) );
+        wp_localize_script( 'option-inspector', 'OPTIONINS',
+            array( 'nonce' => $nonce ) );
     }
 
+    /**
+     * Check AJAX requests.
+     */
     private function security_checks() {
 
         check_ajax_referer( 'option_inspector', '_nonce' );
@@ -62,6 +73,9 @@ final class O1_Option_Inspector {
         }
     }
 
+    /**
+     * Display dBug-ized value.
+     */
     public function ajax_inspect_receiver() {
 
         global $wpdb;
@@ -72,7 +86,10 @@ final class O1_Option_Inspector {
 
         $autoload = $wpdb->get_var( $wpdb->prepare(
             "SELECT autoload FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option_name ) );
-        printf( '<div class="option-autoload">autoload = %s</div>', $autoload );
+        $size = $wpdb->get_var( $wpdb->prepare(
+            "SELECT LENGTH(option_value) FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option_name ) );
+        printf( '<div class="option-autoload">autoload = <strong>%s</strong>, bytes = <strong>%s</strong></div>',
+            $autoload, $size );
 
         $value = get_option( $option_name );
 
@@ -82,6 +99,11 @@ final class O1_Option_Inspector {
         wp_die();
     }
 
+    /**
+     * Display editable value.
+     *
+     * Uses <code>var_export();</code>
+     */
     public function ajax_edit_receiver() {
 
         $this->security_checks();
@@ -97,6 +119,9 @@ final class O1_Option_Inspector {
         wp_die();
     }
 
+    /**
+     * Update option value.
+     */
     public function ajax_update_receiver() {
 
         $this->security_checks();
@@ -119,6 +144,9 @@ final class O1_Option_Inspector {
         }
     }
 
+    /**
+     * Delete option.
+     */
     public function ajax_delete_receiver() {
 
         $this->security_checks();
@@ -132,6 +160,9 @@ final class O1_Option_Inspector {
         }
     }
 
+    /**
+     * Hack menu item into global $submenu.
+     */
     public function menu() {
 
         global $submenu;
@@ -142,6 +173,11 @@ final class O1_Option_Inspector {
         ksort( $submenu['tools.php'] );
     }
 
+    /**
+     * Check for parsing errors in PHP code.
+     *
+     * @see http://devwp.eu/eval-error-check/
+     */
     private function php_code_check( $code ) {
 
         return @eval( 'return true;' . $code );
