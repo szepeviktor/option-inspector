@@ -47,7 +47,7 @@ jQuery(function ($) {
 // Additionals.
 'WPLANG', 'widget_search', 'widget_recent-posts', 'widget_recent-comments', 'widget_archives',
 'widget_meta', 'sidebars_widgets', 'widget_tag_cloud', 'widget_pages', 'widget_nav_menu',
-'current_theme', 'cron', 'dashboard_widget_options'
+'current_theme', 'cron', 'dashboard_widget_options', 'by_user_roles', 'can_compress_scripts'
 ];
     pluginLogos = [
         { regexp: /^woocommerce_/, name: 'WooCommerce', iconclass: 'pluginicon-woo' },
