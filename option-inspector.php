@@ -1,20 +1,25 @@
 <?php
 /*
 Plugin Name: Option Inspector
-Version: 2.1.0
+Version: 2.1.1
 Description: Inspect and edit options, even serialized ones.
 Plugin URI: https://wordpress.org/plugins/options-inspector/
 Author: Viktor Szépe
-Author URI: http://www.online1.hu/webdesign/
 License: GNU General Public License (GPL) version 2
 GitHub Plugin URI: https://github.com/szepeviktor/option-inspector
 */
 
 if ( ! function_exists( 'add_filter' ) ) {
+    error_log( 'Break-in attempt detected: option_inspector_direct_access '
+        . addslashes( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' )
+    );
     ob_get_level() && ob_end_clean();
-    header( 'Status: 403 Forbidden' );
-    header( 'HTTP/1.1 403 Forbidden' );
-    exit();
+    if ( ! headers_sent() ) {
+        header( 'Status: 403 Forbidden' );
+        header( 'HTTP/1.1 403 Forbidden', true, 403 );
+        header( 'Connection: Close' );
+    }
+    exit;
 }
 
 /**

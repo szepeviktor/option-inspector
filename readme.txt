@@ -1,10 +1,10 @@
 === Option Inspector ===
 Contributors: Charles, szepe.viktor
-Donate link: http://sexywp.com/plugin-options-inspector.htm
+Donate link: https://szepe.net/wp-donate/
 Tags: options, management, admin, developer, tools, administration
 Requires at least: 4.0
-Tested up to: 4.1.1
-Stable tag: 2.1.0
+Tested up to: 4.4
+Stable tag: 2.1.1
 
 Inspect and edit options, even serialized ones.
 
@@ -61,6 +61,10 @@ Additional data are read and written by AJAX requests.
 
 == Changelog ==
 
+= 2.1.1 =
+* Fix textarea width.
+* WP 4.4 compatibility.
+
 = 2.1.0 =
 * Display size of option value.
 * Added PHP DocBlocks.
@@ -75,9 +79,9 @@ Additional data are read and written by AJAX requests.
 
 = 1.0.2 =
 * Options Inspector is a tool with which you can easily view all the options in your database,
-even its data is serialized, and alter exactly a certain part of option value.
+  even its data is serialized, and alter exactly a certain part of option value.
 
 == Upgrade Notice ==
 
 = 2.0.0 =
-This is completly different plugin than 1.0.2. Charles gave me permission.
+This is a completly different plugin than 1.0.2. Charles gave me permission.
