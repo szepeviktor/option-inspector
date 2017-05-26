@@ -8,20 +8,21 @@ https://github.com/WordPress/WordPress/blob/master/wp-admin/options.php#L224-L27
 
 global $wpdb;
 ?>
-  <h2><?php esc_html_e('All Settings'); ?></h2>
+	<h2><?php esc_html_e( 'All Settings' ); ?></h2>
 
-  <form name="form" action="options.php" method="post" id="all-options">
-  <?php wp_nonce_field('options-options') ?>
-  <input type="hidden" name="action" value="update" />
-  <input type="hidden" name="option_page" value="options" />
-  <table class="form-table">
+	<form name="form" action="options.php" method="post" id="all-options">
+	<?php wp_nonce_field( 'options-options' ); ?>
+	<input type="hidden" name="action" value="update" />
+	<input type="hidden" name="option_page" value="options" />
+	<table class="form-table">
 <?php
 $options = $wpdb->get_results( "SELECT * FROM $wpdb->options ORDER BY option_name" );
 
 foreach ( (array) $options as $option ) :
 	$disabled = false;
-	if ( $option->option_name == '' )
+	if ( '' === $option->option_name ) {
 		continue;
+	}
 	if ( is_serialized( $option->option_value ) ) {
 		if ( is_serialized_string( $option->option_value ) ) {
 			// This is a serialized string, so we should display it.
@@ -48,7 +49,7 @@ foreach ( (array) $options as $option ) :
 	<textarea class="<?php echo $class ?>" name="<?php echo $name ?>" id="<?php echo $name ?>" cols="30" rows="5"><?php
 		echo esc_textarea( $value );
 	?></textarea>
-	<?php else: ?>
+	<?php else : ?>
 		<input class="regular-text <?php echo $class ?>" type="text" name="<?php echo $name ?>" id="<?php echo $name ?>" value="<?php echo esc_attr( $value ) ?>"<?php disabled( $disabled, true ) ?> />
 	<?php endif
 

@@ -1,9 +1,9 @@
 === Option Inspector ===
-Contributors: Charles, szepe.viktor
+Contributors: szepe.viktor
 Donate link: https://szepe.net/wp-donate/
-Tags: options, management, admin, developer, tools, administration
+Tags: options, management, admin, developer, tools, administration, serialized
 Requires at least: 4.0
-Tested up to: 4.4
+Tested up to: 4.7.1
 Stable tag: 2.1.1
 
 Inspect and edit options, even serialized ones.
@@ -30,7 +30,7 @@ You'll find Option Inspector under Tools / Options.
 Notice: This plugin uses `eval()` to update serialized options.
 Please **DO NOT** use it in production.
 
-This plugin is as WordPress comform as it can be.
+This plugin is as WordPress conform as it can be.
 
 [GitHub repo](https://github.com/szepeviktor/option-inspector)
 

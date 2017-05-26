@@ -7,6 +7,7 @@ Plugin URI: https://wordpress.org/plugins/options-inspector/
 Author: Viktor Szépe
 License: GNU General Public License (GPL) version 2
 GitHub Plugin URI: https://github.com/szepeviktor/option-inspector
+SVN URI: https://plugins.svn.wordpress.org/options-inspector
 */
 
 if ( ! function_exists( 'add_filter' ) ) {
@@ -56,12 +57,19 @@ final class O1_Option_Inspector {
         wp_enqueue_style( 'option_inspector_style', $this->plugin_url . 'css/option-inspector.min.css' );
 
         wp_enqueue_script( 'option-inspector-dbug', $this->plugin_url . 'js/dbug.min.js' );
-        wp_enqueue_script( 'option-inspector-jquery-typewatch', $this->plugin_url . 'js/jquery.typewatch.min.js',
-            array( 'jquery-core' ) );
-        wp_enqueue_script( 'option-inspector', $this->plugin_url . 'js/option-inspector.min.js',
-            array( 'option-inspector-jquery-typewatch', 'thickbox', 'option-inspector-dbug' ) );
-        wp_localize_script( 'option-inspector', 'OPTIONINS',
-            array( 'nonce' => $nonce ) );
+        wp_enqueue_script(
+            'option-inspector-jquery-typewatch',
+            $this->plugin_url . 'js/jquery.typewatch.min.js',
+            array( 'jquery-core' )
+        );
+        wp_enqueue_script(
+            'option-inspector',
+            $this->plugin_url . 'js/option-inspector.min.js',
+            array( 'option-inspector-jquery-typewatch', 'thickbox', 'option-inspector-dbug' )
+        );
+        wp_localize_script( 'option-inspector', 'OPTIONINS', array(
+            'nonce' => $nonce,
+        ) );
     }
 
     /**
@@ -73,7 +81,7 @@ final class O1_Option_Inspector {
 
         $capability = 'manage_options';
 
-        if ( !current_user_can( $capability ) || empty( $_REQUEST['option_name'] ) ) {
+        if ( ! current_user_can( $capability ) || empty( $_REQUEST['option_name'] ) ) {
             wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
         }
     }
@@ -90,11 +98,17 @@ final class O1_Option_Inspector {
         $option_name = sanitize_key( $_REQUEST['option_name'] );
 
         $autoload = $wpdb->get_var( $wpdb->prepare(
-            "SELECT autoload FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option_name ) );
+            "SELECT autoload FROM $wpdb->options WHERE option_name = %s LIMIT 1",
+            $option_name
+        ) );
         $size = $wpdb->get_var( $wpdb->prepare(
-            "SELECT LENGTH(option_value) FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option_name ) );
+            "SELECT LENGTH(option_value) FROM $wpdb->options WHERE option_name = %s LIMIT 1",
+            $option_name
+        ) );
         printf( '<div class="option-autoload">autoload = <strong>%s</strong>, bytes = <strong>%s</strong></div>',
-            $autoload, $size );
+            $autoload,
+            $size
+        );
 
         $value = get_option( $option_name );
 
@@ -120,7 +134,8 @@ final class O1_Option_Inspector {
 
         printf( '<textarea class="edit-option">%s</textarea><div class="update-button"><button
             class="button button-primary" id="option-update">Update Option</button></div>',
-            esc_textarea( $content ) );
+            esc_textarea( $content )
+        );
         wp_die();
     }
 
@@ -185,9 +200,8 @@ final class O1_Option_Inspector {
      */
     private function php_code_check( $code ) {
 
-        return @eval( 'return true;' . $code );
+        return @eval( 'return true;' . $code ); // WPCS: silencing ok.
     }
-
 }
 
 new O1_Option_Inspector();
